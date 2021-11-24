@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "prod": {
+      "commandName": "DockerCompose",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "commandVersion": "1.0"
+    }
+  }
+}

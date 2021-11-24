@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  integrationtesting.api:
+    image: integrationtestingapi
+    build:
+      context: .
+      dockerfile: IntegrationTesting.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "52101:80"
+      - "52102:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - mongo
+    networks:
+      - integrationtestingapi-network
+  
+  mongo:
+    image: mongo:4.0.19
+    container_name: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=adminmongo
+      - MONGO_INITDB_ROOT_PASSWORD=adminmongo
+    ports:
+      - "27017:27017"
+    networks:
+      - integrationtestingapi-network
+
+networks:
+  integrationtestingapi-network:
+    driver: bridge
