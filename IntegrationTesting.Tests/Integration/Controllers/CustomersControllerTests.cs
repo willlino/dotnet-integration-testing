@@ -92,18 +92,16 @@ namespace IntegrationTesting.Tests.Integration.Controllers
             mongoCollection.InsertOne(gabrielaFerraz);
 
             // Act
-            var response = await httpClient.DeleteAsync($"api/customers/{gabrielaNavarro}");
+            var response = await httpClient.DeleteAsync($"api/customers/{gabrielaNavarro.Id}");
 
             // Assert
             response.Should()
                 .Be200Ok()
                 .And
-                .Satisfy<List<Customer>>(content =>
-                {
-                    content.Should().HaveCount(2);
-                    content.Should().NotContain(x => x.Id == gabrielaNavarro.Id);
-                    content.Should().ContainSingle(x => x.Id == gabrielaFerraz.Id);
-                });
+                .MatchInContent("The customer was sucessfuly deleted");
+                
+            var queryResult = mongoCollection.Find(c => c.Id == gabrielaNavarro.Id).ToList();
+            queryResult.Should().BeEmpty();
         }
     }
 }
