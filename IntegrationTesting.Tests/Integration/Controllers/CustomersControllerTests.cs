@@ -1,8 +1,10 @@
 ﻿using FluentAssertions;
 using IntegrationTesting.API.Models;
 using IntegrationTesting.Tests.Support;
+using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,28 +59,51 @@ namespace IntegrationTesting.Tests.Integration.Controllers
         }
 
         [Fact(DisplayName = "Should get all customers")]
-        public void ShouldGetAllCustomers()
+        public async Task ShouldGetAllCustomers()
         {
+            // Arrange
+            var gabrielaNavarro = new Customer("Gabriela", "Navarro");
+            var gabrielaFerraz = new Customer("Gabriela", "Ferraz");
+            mongoCollection.InsertOne(gabrielaNavarro);
+            mongoCollection.InsertOne(gabrielaFerraz);
+
+            // Act
+            var response = await httpClient.GetAsync("api/customers");
+            
+            // Assert
+            response.Should()
+                .Be200Ok()
+                .And
+                .Satisfy<List<Customer>>(content =>
+                {
+                    content.Should().HaveCount(2);
+                    content.Should().ContainSingle(x => x.Id == gabrielaNavarro.Id);
+                    content.Should().ContainSingle(x => x.Id == gabrielaFerraz.Id);
+                });
         }
 
         [Fact(DisplayName = "Should delete customer by id")]
-        public void ShouldDeleteCustomer()
+        public async Task ShouldDeleteCustomer()
         {
-        }
+            // Arrange
+            var gabrielaNavarro = new Customer("Gabriela", "Navarro");
+            var gabrielaFerraz = new Customer("Gabriela", "Ferraz");
+            mongoCollection.InsertOne(gabrielaNavarro);
+            mongoCollection.InsertOne(gabrielaFerraz);
 
-        /// <summary>
-        /// This test is only to see if DI would work on integration tests and when the app is running
-        /// </summary>
-        [Fact(DisplayName = "Should return string in test DI")]
-        public async void TestDI_ShouldDeleteCustomer()
-        {
-            var result = await httpClient.GetAsync("api/customers/TestDI");
+            // Act
+            var response = await httpClient.DeleteAsync($"api/customers/{gabrielaNavarro}");
 
-            result
-                .Should()
+            // Assert
+            response.Should()
                 .Be200Ok()
                 .And
-                .MatchInContent("Test DI worked!");
+                .Satisfy<List<Customer>>(content =>
+                {
+                    content.Should().HaveCount(2);
+                    content.Should().NotContain(x => x.Id == gabrielaNavarro.Id);
+                    content.Should().ContainSingle(x => x.Id == gabrielaFerraz.Id);
+                });
         }
     }
 }

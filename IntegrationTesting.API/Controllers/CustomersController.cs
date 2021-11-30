@@ -50,15 +50,5 @@ namespace IntegrationTesting.API.Controllers
             await this.customerRepository.Delete(id);
             return Ok("The customer was sucessfuly deleted");
         }
-
-        /// <summary>
-        /// This test is only to see if DI would work on integration tests and when the app is running
-        /// </summary>
-        [HttpGet("TestDI")]
-        public IActionResult TestDI()
-        {
-            var result = testAppService.MethodToTestDI();
-            return Ok(result);
-        }
     }
 }
