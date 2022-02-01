@@ -1,9 +1,9 @@
 ﻿using MongoDB.Driver;
 using Microsoft.Extensions.Configuration;
 using System;
-using IntegrationTesting.API.Data;
+using IntegrationTesting.API.Data.Mongo;
 
-namespace IntegrationTesting.Tests.Support
+namespace IntegrationTesting.Tests.Support.Mongo
 {
     public class MongoTestConfiguration : IMongoConfiguration
     {

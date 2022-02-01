@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace IntegrationTesting.API.Data.Repositories
+namespace IntegrationTesting.API.Data.RepositoriesInterfaces
 {
     public interface ICustomerRepository
     {

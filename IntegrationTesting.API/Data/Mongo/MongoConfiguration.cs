@@ -1,7 +1,7 @@
 ﻿using MongoDB.Driver;
 using Microsoft.Extensions.Configuration;
 
-namespace IntegrationTesting.API.Data
+namespace IntegrationTesting.API.Data.Mongo
 {
     public class MongoConfiguration : IMongoConfiguration
     {

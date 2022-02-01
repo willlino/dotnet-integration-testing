@@ -8,7 +8,7 @@ services:
       dockerfile: IntegrationTesting.API/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80
     ports:
       - "52101:80"
       - "52102:443"
@@ -28,6 +28,18 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=adminmongo
     ports:
       - "27017:27017"
+    networks:
+      - integrationtestingapi-network
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=AdminSqlServer10
+      - MSSQL_PID=Express
+    ports:
+      - "14800:1433"
     networks:
       - integrationtestingapi-network
 

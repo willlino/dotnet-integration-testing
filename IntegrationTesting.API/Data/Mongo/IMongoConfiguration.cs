@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 
-namespace IntegrationTesting.API.Data
+namespace IntegrationTesting.API.Data.Mongo
 {
     public interface IMongoConfiguration
     {

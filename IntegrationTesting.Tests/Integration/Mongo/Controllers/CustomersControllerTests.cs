@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using IntegrationTesting.API.Models;
 using IntegrationTesting.Tests.Support;
-using Microsoft.AspNetCore.Mvc;
+using IntegrationTesting.Tests.Support.Mongo;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -10,9 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace IntegrationTesting.Tests.Integration.Controllers
+namespace IntegrationTesting.Tests.Integration.Mongo.Controllers
 {
-    public class CustomersControllerTests : IntegrationTest
+    public class CustomersControllerTests : IntegrationTestWithMongo
     {
         private readonly IMongoCollection<Customer> mongoCollection;
         public CustomersControllerTests(CustomWebAppFactory<API.Startup> httpTestFactory) : base(httpTestFactory)

@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
+using IntegrationTesting.API.Data.RepositoriesInterfaces;
 
-namespace IntegrationTesting.API.Data.Repositories
+namespace IntegrationTesting.API.Data.Mongo.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {

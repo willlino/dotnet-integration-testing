@@ -1,5 +1,4 @@
-﻿using IntegrationTesting.API.AppServices;
-using IntegrationTesting.API.Data.Repositories;
+﻿using IntegrationTesting.API.Data.RepositoriesInterfaces;
 using IntegrationTesting.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,12 +11,10 @@ namespace IntegrationTesting.API.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ICustomerRepository customerRepository;
-        private readonly ITestAppService testAppService;
         
-        public CustomersController(ICustomerRepository customerRepository, ITestAppService testAppService)
+        public CustomersController(ICustomerRepository customerRepository)
         {
             this.customerRepository = customerRepository;
-            this.testAppService = testAppService;
         }
         
         [HttpGet]
