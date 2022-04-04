@@ -5,6 +5,7 @@ using Xunit;
 
 namespace IntegrationTesting.Tests.Unit.Models
 {
+    [Trait("Category", "general")]
     public class CustomerTests
     {
         [Fact(DisplayName = "Should constuct the customer correctly")]

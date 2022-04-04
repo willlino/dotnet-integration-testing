@@ -14,7 +14,8 @@ using Xunit;
 
 namespace IntegrationTesting.Tests.Integration.SqlServer.Controllers
 {
-    public class CustomersControllerTests : IntegrationTestWithSqlServer, IDisposable
+    [Trait("Type", "sqlserver")]
+    public class CustomersControllerTests : IntegrationTestWithSqlServer
     {
         public CustomersControllerTests(CustomWebAppFactory<API.Startup> httpTestFactory) : base(httpTestFactory)
         {
@@ -64,8 +65,7 @@ namespace IntegrationTesting.Tests.Integration.SqlServer.Controllers
             var customer = new Customer("Gabriela", "Navarro");
             context.Customers.Add(customer);
             context.SaveChanges();
-            var gabriela = context.Customers.SingleOrDefault(x => x.Id == customer.Id);
-
+            
             customer = new Customer("Gabriela", "Ferraz");
             var content = new StringContent(JsonConvert.SerializeObject(customer), Encoding.UTF8, "application/json");
 

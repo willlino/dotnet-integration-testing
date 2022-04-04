@@ -13,7 +13,7 @@ namespace IntegrationTesting.Tests.Support.SqlServer
             : base(httpTestFactory)
         {
             context = serviceScope.ServiceProvider.GetRequiredService<IntegrationTestingContext>();
-            //RemoveAllDatabaseData();
+            RemoveAllDatabaseData();
         }
 
         public void Dispose()

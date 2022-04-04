@@ -12,6 +12,7 @@ using Xunit;
 
 namespace IntegrationTesting.Tests.Integration.Mongo.Controllers
 {
+    [Trait("Type", "mongo")]
     public class CustomersControllerTests : IntegrationTestWithMongo
     {
         private readonly IMongoCollection<Customer> mongoCollection;
