@@ -36,7 +36,7 @@ namespace IntegrationTesting.API.Data.SqlServer.Repositories
 
         public async Task<Customer> Get(Guid id)
         {
-            var customer = await this.context.Customers.SingleAsync(c => c.Id == id);
+            var customer = await this.context.Customers.SingleOrDefaultAsync(c => c.Id == id);
             return customer;
         }
 

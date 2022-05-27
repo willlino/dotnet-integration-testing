@@ -4,7 +4,6 @@ using IntegrationTesting.Tests.Support;
 using IntegrationTesting.Tests.Support.SqlServer;
 using MongoDB.Driver;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -14,7 +13,6 @@ using Xunit;
 
 namespace IntegrationTesting.Tests.Integration.SqlServer.Controllers
 {
-    [Trait("Type", "sqlserver")]
     public class CustomersControllerTests : IntegrationTestWithSqlServer
     {
         public CustomersControllerTests(CustomWebAppFactory<API.Startup> httpTestFactory) : base(httpTestFactory)
@@ -22,7 +20,7 @@ namespace IntegrationTesting.Tests.Integration.SqlServer.Controllers
         }
 
         [Fact(DisplayName = "Should add customer")]
-        public async Task ShouldAddCustomer()
+        public async Task PostCustomers_ShouldAddCustomerAndReturn200Ok_WhenCustomerDoesNotExistsInDatabase()
         {
             // Arrange
             var customer = new Customer("Gabriela", "Navarro");
@@ -39,33 +37,14 @@ namespace IntegrationTesting.Tests.Integration.SqlServer.Controllers
 
         }
 
-        //[Fact(DisplayName = "Should add customer")]
-        //public async Task ShouldAddCustomer2()
-        //{
-        //    // Arrange
-        //    var customer = new Customer("Gabriela", "Navarro");
-
-        //    var content = new StringContent(JsonConvert.SerializeObject(customer), Encoding.UTF8, "application/json");
-
-        //    // Act
-        //    var response = await httpClient.PostAsync("api/customers", content);
-
-        //    // Assert
-        //    response.Should().Be200Ok();
-        //    var dbCustomer = context.Customers.SingleOrDefault(x => x.Id == customer.Id);
-        //    dbCustomer.Should().BeEquivalentTo<Customer>(customer);
-        //    context.Customers.Should().HaveCount(1);
-
-        //}
-
         [Fact(DisplayName = "Should update customer")]
-        public async Task ShouldUpdateCustomer()
+        public async Task PostCustomers_ShouldUpdateCustomerAndReturn200Ok_WhenCustomerExistsInDatabase()
         {
             // Arrange
             var customer = new Customer("Gabriela", "Navarro");
             context.Customers.Add(customer);
             context.SaveChanges();
-            
+
             customer = new Customer("Gabriela", "Ferraz");
             var content = new StringContent(JsonConvert.SerializeObject(customer), Encoding.UTF8, "application/json");
 
@@ -79,7 +58,7 @@ namespace IntegrationTesting.Tests.Integration.SqlServer.Controllers
         }
 
         [Fact(DisplayName = "Should get all customers")]
-        public async Task ShouldGetAllCustomers()
+        public async Task GetCustomers_ShouldGetAllCustomers()
         {
             // Arrange
             var gabrielaNavarro = new Customer("Gabriela", "Navarro");
@@ -104,7 +83,7 @@ namespace IntegrationTesting.Tests.Integration.SqlServer.Controllers
         }
 
         [Fact(DisplayName = "Should delete customer by id")]
-        public async Task ShouldDeleteCustomer()
+        public async Task DeleteCustomers_ShouldDeleteCustomer_WhenCustomerExistsInDatabase()
         {
             // Arrange
             var gabrielaNavarro = new Customer("Gabriela", "Navarro");

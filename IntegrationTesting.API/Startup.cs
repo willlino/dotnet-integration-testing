@@ -1,5 +1,4 @@
 using IntegrationTesting.API.AppServices;
-using IntegrationTesting.API.Data.Mongo;
 using IntegrationTesting.API.Data.RepositoriesInterfaces;
 using IntegrationTesting.API.Data.SqlServer;
 using Microsoft.AspNetCore.Builder;
@@ -28,14 +27,12 @@ namespace IntegrationTesting.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IMongoConfiguration, MongoConfiguration>();
             services.AddDbContext<IntegrationTestingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlDatabase")));
 
             // App Services
             services.AddScoped<ITestAppService, TestAppService>();
 
             // Repositories
-            //services.AddScoped<ICustomerRepository, Data.Mongo.Repositories.CustomerRepository>();
             services.AddScoped<ICustomerRepository, Data.SqlServer.Repositories.CustomerRepository>();
 
             services.AddControllers();

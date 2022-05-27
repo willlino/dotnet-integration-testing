@@ -1,6 +1,4 @@
-﻿using IntegrationTesting.API.Data.Mongo;
-using IntegrationTesting.API.Data.SqlServer;
-using IntegrationTesting.Tests.Support.Mongo;
+﻿using IntegrationTesting.API.Data.SqlServer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -23,8 +21,7 @@ namespace IntegrationTesting.Tests.Support
 
             builder.ConfigureServices(serviceCollection =>
             {
-                MongoInjection(serviceCollection);
-                //SqlServerInjection(serviceCollection, config);
+                SqlServerInjection(serviceCollection, config);
             });
 
             base.ConfigureWebHost(builder);
@@ -38,13 +35,6 @@ namespace IntegrationTesting.Tests.Support
             configurationBuilder.AddEnvironmentVariables();
 
             return configurationBuilder.Build();
-        }
-
-        private static void MongoInjection(IServiceCollection serviceCollection)
-        {
-            var currentMongoConfiguration = serviceCollection.SingleOrDefault(s => s.ServiceType == typeof(IMongoConfiguration));
-            serviceCollection.Remove(currentMongoConfiguration);
-            serviceCollection.AddSingleton<IMongoConfiguration, MongoTestConfiguration>();
         }
 
         private static void SqlServerInjection(IServiceCollection serviceCollection, IConfiguration configuration)

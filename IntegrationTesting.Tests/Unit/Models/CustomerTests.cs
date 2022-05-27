@@ -5,14 +5,15 @@ using Xunit;
 
 namespace IntegrationTesting.Tests.Unit.Models
 {
-    [Trait("Category", "general")]
     public class CustomerTests
     {
-        [Fact(DisplayName = "Should constuct the customer correctly")]
-        public void ShouldConstructCustomerCorrectly()
+        [Fact(DisplayName = "Should construct the customer correctly")]
+        public void Should_CustomerConstructor_ConstructCustomerCorrectly()
         {
+            // Arrange and Act
             var customer = new Customer("João", "Farias");
 
+            // Assert
             customer.Id.GetType().Should().Be<Guid>();
             customer.Id.Should().NotBeEmpty();
             customer.Name.Should().Be("João");
